@@ -1,20 +1,49 @@
 require "sinatra"
 require_relative "sum.rb"
+require_relative "check.rb"
 
 get '/' do 
-	erb :index
+	erb :user_name 
+end 
+
+post '/user_name' do
+user_name = params[:user_name]
+ redirect '/password?user_name=' + user_name
+end
+
+get '/password' do 
+	user_name = params[:user_name]
+	erb :password, :locals => {:user_name=>user_name}
+end 
+
+post '/password' do 
+	user_name = params[:user_name]
+	password = params[:password]
+	userpass verify(:user_name.to_s , :password.to_s)
+	if userpass == true
+		redirect '/index?username=' + user_name + '&password=' + password 
+	else 
+	redirect '/verify'
+	end  
+end
+
+
+get '/index' do 
+	user_name = params[:user_name]
+	password = params[:password]
+	erb :index, :locals => {:user_name=>user_name, :password=>password}
 end 
 
 post '/index' do
   # "You selected #{params[:radio]}"
-  radio = params[:radio]
-  puts "RADIO IN INDEX #{radio}"
+  	radio = params[:radio]
+  	user_name = params[:user_name]
+	password = params[:password]
  redirect '/two_numbers?radio=' + radio
 end
 
 get '/two_numbers' do
 	radio = params[:radio]
-	puts "RADIO IN TWONUMBERS GET #{radio}"
 	erb :two_numbers, :locals => {:radio=>radio}
 end
 
@@ -22,8 +51,7 @@ end
 	num1 = params[:num1]
 	num2 = params[:num2]
 	radio = params[:radio]
-	puts "RADIO IN TWONUMBERS POST #{radio}"
-	totalnumbers = calc(radio, num1.to_i, num2.to_i)
+	totalnumbers = calc(radio, num1.to_f, num2.to_f)
 redirect '/total?radio=' + radio + '&num1=' + num1 + '&num2=' + num2 + '&totalnumbers=' + totalnumbers
 end 
 
@@ -31,7 +59,6 @@ get '/total' do
 	num1 = params[:num1]
 	num2 = params[:num2]
 	radio = params[:radio]
-	puts "RADIO IN TOTAL GET #{radio}"
 	totalnumbers = params[:totalnumbers]
 	erb :total, :locals => {:radio=>radio, :num1=>num1, :num2=>num2, :totalnumbers=>totalnumbers }
 end 
