@@ -10,7 +10,7 @@ def calc (op, num1, num2)
 
 	elsif op == "divide"
 		if num2 == 0
-			calc = "Can't Divide By Zero!"
+			calc = "Cant Divide By Zero!"
 		else 
 			calc = num1 / num2
 		end

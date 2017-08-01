@@ -7,24 +7,48 @@ get '/' do
 end 
 
 post '/user_name' do
-user_name = params[:user_name]
- redirect '/password?user_name=' + user_name
+	user_name = params[:user_name]
+	p user_name
+ 	redirect '/password?user_name=' + user_name
 end
 
 get '/password' do 
 	user_name = params[:user_name]
-	erb :password, :locals => {:user_name=>user_name}
+	password = params[:password]
+	p user_name
+	erb :password, :locals => {:user_name=>user_name, :password=>password}
 end 
 
 post '/password' do 
 	user_name = params[:user_name]
 	password = params[:password]
-	userpass verify(:user_name.to_s , :password.to_s)
-	if userpass == true
+	userpass = verify("#{user_name}", "#{password}")
+	p user_name
+	p userpass
+	if verify("#{user_name}", "#{password}") == true
 		redirect '/index?username=' + user_name + '&password=' + password 
 	else 
 	redirect '/verify'
 	end  
+end
+
+get '/verify' do
+	user_name = params[:user_name]
+	password = params[:password]
+	erb :verify
+end 
+
+post '/verify' do
+	# redirect '/user_name?'
+end
+
+get '/user_name' do 
+	erb :user_name 
+end 
+
+post '/user_name' do
+user_name = params[:user_name]
+ redirect '/password?user_name=' + user_name
 end
 
 
@@ -52,6 +76,7 @@ end
 	num2 = params[:num2]
 	radio = params[:radio]
 	totalnumbers = calc(radio, num1.to_f, num2.to_f)
+	p totalnumbers
 redirect '/total?radio=' + radio + '&num1=' + num1 + '&num2=' + num2 + '&totalnumbers=' + totalnumbers
 end 
 
@@ -60,8 +85,23 @@ get '/total' do
 	num2 = params[:num2]
 	radio = params[:radio]
 	totalnumbers = params[:totalnumbers]
+	p totalnumbers
 	erb :total, :locals => {:radio=>radio, :num1=>num1, :num2=>num2, :totalnumbers=>totalnumbers }
 end 
+
+get '/index' do 
+	user_name = params[:user_name]
+	password = params[:password]
+	erb :index, :locals => {:user_name=>user_name, :password=>password}
+end 
+
+post '/index' do
+  # "You selected #{params[:radio]}"
+  	radio = params[:radio]
+  	user_name = params[:user_name]
+	password = params[:password]
+ redirect '/two_numbers?radio=' + radio
+end
 
 # get '/three_numbers' do
 # 	age = params[:age]

@@ -1,7 +1,5 @@
-	def verify (user, pass)
-	
-	verify.to_a
-	set = verify
+	def verify(user, pass)
+	set = ["#{user}", "#{pass}"]
 	pairs = [["cc","bernie"],["ll","swanson"],["mm","koch"],["ff","trump"]]
 	if pairs.include? set
 	then 
@@ -9,5 +7,6 @@
 	else
 	x = false
 end
-
 end
+
+# verify("ff", "trump") 
