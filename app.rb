@@ -1,6 +1,6 @@
 require "sinatra"
-require_relative "sum.rb"
-require_relative "check.rb"
+# require_relative "sum.rb"
+# require_relative "check.rb"
 
 get '/events' do 
 	p"Events"
@@ -49,14 +49,14 @@ end
 post '/password' do 
 	user_name = params[:user_name]
 	password = params[:password]
-	userpass = verify("#{user_name}", "#{password}")
+	# userpass = verify("#{user_name}", "#{password}")
 	p user_name
 	p userpass
-	if verify("#{user_name}", "#{password}") == true
-		redirect '/index?username=' + user_name + '&password=' + password 
-	else 
-	redirect '/verify'
-	end  
+	# if verify("#{user_name}", "#{password}") == true
+	# 	redirect '/index?username=' + user_name + '&password=' + password 
+	# else 
+	# redirect '/verify'
+	# end  
 end
 
 get '/verify' do
@@ -102,7 +102,7 @@ end
 	num1 = params[:num1]
 	num2 = params[:num2]
 	radio = params[:radio]
-	totalnumbers = calc(radio, num1.to_f, num2.to_f)
+	# totalnumbers = calc(radio, num1.to_f, num2.to_f)
 	p totalnumbers
 redirect '/total?radio=' + radio + '&num1=' + num1 + '&num2=' + num2 + '&totalnumbers=' + totalnumbers
 end 
