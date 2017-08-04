@@ -2,6 +2,33 @@ require "sinatra"
 require_relative "sum.rb"
 require_relative "check.rb"
 
+get '/events' do 
+	p"Events"
+	erb :events
+end 
+
+post '/events' do 
+	redirect '/verify'  
+end
+
+get '/contact_us' do
+	p "contact_us"
+	erb :contact_us
+end
+
+post '/contact_us' do
+	redirect '/verify'
+end 
+
+get '/products' do
+	p "products"
+	erb :products
+end
+
+post '/products' do
+	redirect '/verify'
+end
+
 get '/' do 
 	erb :user_name 
 end 
